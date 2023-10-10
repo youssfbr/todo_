@@ -1,50 +1,32 @@
 package com.github.youssfbr.todolist.entities;
 
-import java.util.Objects;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 
+import java.time.LocalDateTime;
+import java.util.Objects;
+import java.util.UUID;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity(name = "tb_users")
 public class User {
 
-    private Long id;
+    @Id
+    @GeneratedValue(generator = "UUID")
+    private UUID id;
+
+    @Column(unique = true)
     private String name;
     private String username;
     private String password;
 
-    public User() {
-    }
-
-    public User(String name, String username, String password) {
-        this.name = name;
-        this.username = username;
-        this.password = password;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
+    @CreationTimestamp
+    private LocalDateTime createdAt;
 
     @Override
     public boolean equals(Object o) {
