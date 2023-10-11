@@ -1,5 +1,6 @@
 package com.github.youssfbr.todolist.filter;
 
+import at.favre.lib.crypto.bcrypt.BCrypt;
 import com.github.youssfbr.todolist.entities.User;
 import com.github.youssfbr.todolist.repositories.IUserRepository;
 import jakarta.servlet.*;
@@ -35,10 +36,16 @@ public class FilterTaskAuth extends OncePerRequestFilter {
             response.sendError(401);
         }
         else {
-
             // Validar senha
 
-            filterChain.doFilter(request, response);
+            BCrypt.Result passwordVerify = BCrypt.verifyer().verify(password.toCharArray(), user.getPassword());
+
+            if (!passwordVerify.verified) {
+                response.sendError(401);
+            }
+            else {
+                filterChain.doFilter(request, response);
+            }
         }
     }
 }
