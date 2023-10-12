@@ -7,8 +7,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.UUID;
-
 @RestController
 @RequestMapping("/tasks")
 @RequiredArgsConstructor
@@ -19,11 +17,7 @@ public class TaskController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Task create(@RequestBody Task task, HttpServletRequest request)  {
-
-        Object idUser = request.getAttribute("idUser");
-        task.setIdUser((UUID) idUser);
-
-        return taskService.create(task);
+        return taskService.create(task, request);
     }
 
 }
