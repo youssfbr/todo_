@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -34,5 +35,15 @@ public class TaskService implements ITaskService {
         }
 
         return taskRepository.save(task);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Task> list(HttpServletRequest request) {
+
+        Object idUserResult = request.getAttribute("idUser");
+
+        return taskRepository.findByIdUser((UUID) idUserResult);
+
     }
 }

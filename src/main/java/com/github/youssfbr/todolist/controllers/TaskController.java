@@ -7,6 +7,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/tasks")
 @RequiredArgsConstructor
@@ -18,6 +20,11 @@ public class TaskController {
     @ResponseStatus(HttpStatus.CREATED)
     public Task create(@RequestBody Task task, HttpServletRequest request)  {
         return taskService.create(task, request);
+    }
+
+    @GetMapping
+    public List<Task> list(HttpServletRequest request) {
+        return taskService.list(request);
     }
 
 }
