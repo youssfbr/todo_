@@ -5,11 +5,8 @@ import com.github.youssfbr.todolist.entities.User;
 import com.github.youssfbr.todolist.repositories.IUserRepository;
 import com.github.youssfbr.todolist.services.exceptions.UsernameExistsException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.sql.SQLIntegrityConstraintViolationException;
 
 @Service
 @RequiredArgsConstructor

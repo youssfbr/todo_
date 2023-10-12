@@ -13,7 +13,7 @@ import java.time.Instant;
 public class ResourceExceptionHandler {
 
     @ExceptionHandler(UsernameExistsException.class)
-    public ResponseEntity<StandardError> UsernameExistsException (
+    public ResponseEntity<StandardError> usernameExistsException (
             UsernameExistsException e,
             HttpServletRequest request)
     {
