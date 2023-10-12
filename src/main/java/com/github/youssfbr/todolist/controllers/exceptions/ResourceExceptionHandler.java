@@ -1,5 +1,6 @@
 package com.github.youssfbr.todolist.controllers.exceptions;
 
+import com.github.youssfbr.todolist.services.exceptions.DateException;
 import com.github.youssfbr.todolist.services.exceptions.UsernameExistsException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
@@ -17,7 +18,6 @@ public class ResourceExceptionHandler {
             UsernameExistsException e,
             HttpServletRequest request)
     {
-
         HttpStatus status = HttpStatus.BAD_REQUEST;
 
         StandardError error = StandardError.builder()
@@ -30,5 +30,24 @@ public class ResourceExceptionHandler {
 
         return new ResponseEntity<>(error, status);
     }
+
+    @ExceptionHandler(DateException.class)
+    public ResponseEntity<StandardError> dateStartException (
+            DateException e,
+            HttpServletRequest request)
+    {
+        HttpStatus status = HttpStatus.BAD_REQUEST;
+
+        StandardError error = StandardError.builder()
+                .timestamp(Instant.now())
+                .status(status.value())
+                .error("Data inválida.")
+                .message(e.getMessage())
+                .path(request.getRequestURI())
+                .build();
+
+        return new ResponseEntity<>(error, status);
+    }
+
 
 }

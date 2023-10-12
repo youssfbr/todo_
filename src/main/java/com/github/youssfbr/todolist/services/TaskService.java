@@ -2,11 +2,13 @@ package com.github.youssfbr.todolist.services;
 
 import com.github.youssfbr.todolist.entities.Task;
 import com.github.youssfbr.todolist.repositories.ITaskRepository;
+import com.github.youssfbr.todolist.services.exceptions.DateException;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Service
@@ -21,6 +23,15 @@ public class TaskService implements ITaskService {
 
         Object idUser = request.getAttribute("idUser");
         task.setIdUser((UUID) idUser);
+
+        LocalDateTime currentDate = LocalDateTime.now();
+        if (currentDate.isAfter(task.getStartAt()) || currentDate.isAfter(task.getEndAt())) {
+            throw new DateException("A data deve digitada ser maior que a data e hora atual.");
+        }
+
+        if (task.getStartAt().isAfter(task.getEndAt())) {
+            throw new DateException("A data de inicio deve ser menor que a data de termino.");
+        }
 
         return taskRepository.save(task);
     }
